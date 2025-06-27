@@ -20,6 +20,7 @@ import { getAllSymbols } from "../../../rtk/slices/crm-slices/allSymbols/getAllS
 import IndicatorsSettings from "./IndicatorsSettings";
 import { toast, ToastContainer } from "react-toastify";
 import socket from "../../../utils/socket";
+import CurrencySelector from "../../../Layouts/AssetSelector";
 
 function calculateRSI(data, period = 14) {
   let gains = 0, losses = 0;
@@ -2252,7 +2253,7 @@ const TradingViewChart2 = () => {
 
   return (
     <div className="chart-wrapper" style={{
-      backgroundColor: terminalPath ? "#010e1c" : "black"
+      background: "linear-gradient(to bottom, #2a0040, #4b0082)"
     }}>
       {orderSuccessAlertPending && (
         <Alert
@@ -2337,68 +2338,7 @@ const TradingViewChart2 = () => {
 
       <div className="chart-topbar w-100 bg-dark d-flex align-items-center gap-2 p-2">
 
-        <Dropdown isOpen={selectDropdownOpen} toggle={toggleSelectDropdown} className="symbol-select w-100">
-          <DropdownToggle
-            caret
-            className="w-100 btn btn-outline-light d-flex align-items-center gap-2"
-            style={{ backgroundColor: '#010e1c', borderColor: '#6c757d', height: '40px' }}
-          >
-            {/* <i className={icon} style={{ fontSize: '20px', color }} /> */}
-            <img src={selectedSymbolIcon} alt="icon images" width={30} height={30} />
-
-            <span>{selected}</span>
-          </DropdownToggle>
-
-          <DropdownMenu className="w-100" style={{ backgroundColor: '#010e1c', maxHeight: '300px', overflowY: 'auto' }}>
-            <div className="p-2">
-              <div className="d-flex align-items-center gap-2 mb-2">
-                <i className="ri-search-line" style={{ color: '#6c757d' }}></i>
-                <Input
-                  bsSize="sm"
-                  placeholder="Search symbol"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  style={{
-                    backgroundColor: '#010e1c',
-                    color: '#fff',
-                    borderColor: '#6c757d'
-                  }}
-                />
-              </div>
-            </div>
-            {filteredOptions.length > 0 ? (
-              filteredOptions.map(({ value, icon, color, percent }) => (
-                <DropdownItem
-                  key={value}
-                  onClick={() => {
-                    handleSelectChange({ value });
-                    setDropdownOpen(false);
-                    setSymbolPercentage(percent)
-                    setSymbolIcon(icon)
-                  }}
-                  active={value === selected}
-                  className="d-flex align-items-center gap-2"
-                  style={{
-                    backgroundColor: value === selected ? '#010e1c' : '#010e1c',
-                    color: '#fff',
-                    cursor: 'pointer'
-                  }}
-                >
-                  {/* <i className={icon} style={{ fontSize: '20px', color }} /> */}
-                  <img src={icon} alt="icon images" width={30} height={30} />
-                  <span className="d-flex justify-content-between align-items-center w-100">
-                    {value}
-                    <span className="badge text-secondary" style={{ fontSize: '13px', lineHeight: '13px', padding: '3px' }}>{percent}%</span>
-                  </span>
-                </DropdownItem>
-              ))
-            ) : (
-              <DropdownItem disabled className="text-muted text-center">
-                No matching symbols
-              </DropdownItem>
-            )}
-          </DropdownMenu>
-        </Dropdown>
+        <CurrencySelector />
 
         {/* <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown} className="btn btn-outline-light">
           <DropdownToggle tag="i" className="ri-hourglass-fill" style={{ cursor: 'pointer' }} />
@@ -2451,67 +2391,10 @@ const TradingViewChart2 = () => {
 
          */}
 
-        <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown} className="btn btn-outline-light p-0 border-0">
-          <DropdownToggle className="btn btn-outline-light">
-            <i className="ri-hourglass-fill" />
-          </DropdownToggle>
-
-          <DropdownMenu
-            end
-            style={{ backgroundColor: '#010e1c', border: '1px solid #6c757d' }}
-          >
-            {Object.keys(timeframes).map((tf) => (
-              <DropdownItem
-                key={tf}
-                onClick={() => {
-                  const invertedTF = tf.slice(-1).toUpperCase() + tf.slice(0, -1);
-                  setSelectedTimeframe(tf);
-                  setbars(100);
-
-                  if (seriesRef.current) {
-                    seriesRef.current.setData([]);
-                  }
-
-                  dispatch(fetchMarketDataHistory({ symbol: selectedSymbol, timeframe: invertedTF, bars }));
-                }}
-                style={{
-                  color: selectedTimeframe === tf ? '#3f87ff' : '#fff',
-                  // color: '#fff',
-                  cursor: 'pointer',
-                }}
-                className="custom-dropdown-item "
-              >
-                {tf} {selectedTimeframe === tf && (<i className="ri-check-line text-success"></i>)}
-              </DropdownItem>
-            ))}
-          </DropdownMenu>
-        </Dropdown>
 
 
-        <Dropdown isOpen={seriesDropdownOpen} toggle={toggleSeriesDropdown} className="btn btn-outline-light p-0 border-0">
-          {/* <DropdownToggle tag="i" className="ri-line-chart-line" style={{ cursor: 'pointer' }} /> */}
-          <DropdownToggle className="btn btn-outline-light">
-            <i className="ri-line-chart-line" />
-          </DropdownToggle>
-          <DropdownMenu end
-            style={{ backgroundColor: '#010e1c', border: '1px solid #6c757d' }}
-          >
-            {seriesTypes?.map((type) => (
-              <DropdownItem
-                key={type}
-                onClick={() => handleSeriesTypeChange(type)}
-                // className={selectedSeriesType === type ? "active" : ""}
-                style={{
-                  color: selectedSeriesType === type ? '#3f87ff' : '#fff',
-                  // color: '#fff',
-                  cursor: 'pointer',
-                }}
-              >
-                {type} {selectedSeriesType === type && (<i className="ri-check-line text-success"></i>)}
-              </DropdownItem>
-            ))}
-          </DropdownMenu>
-        </Dropdown>
+
+
 
 
 
@@ -2523,7 +2406,8 @@ const TradingViewChart2 = () => {
           <i className="ri-camera-fill"></i>
         </button> */}
 
-        <button
+        {/*
+         <button
           onClick={() => {
             chartRef.current.timeScale().scrollToRealTime();
           }}
@@ -2532,43 +2416,11 @@ const TradingViewChart2 = () => {
         >
           <i className="ri-rfid-line"></i>
         </button>
+        */}
 
 
         {/* <div style={{ display: "flex", alignItems: "center", gap: "10px", marginLeft: "10px" }}> */}
-        <Dropdown isOpen={indicatorDropdownOpen} toggle={() => setIndicatorDropdownOpen(!indicatorDropdownOpen)} className="btn btn-outline-light p-0 border-0">
-          {/* <DropdownToggle tag="i" className="ri-router-line" style={{ cursor: 'pointer' }} /> */}
-          <DropdownToggle className="btn btn-outline-light">
-            <i className="ri-router-line" />
-          </DropdownToggle>
-          <DropdownMenu style={{ backgroundColor: "#010e1c", borderColor: "#6c757d" }}>
-            <DropdownItem onClick={() => toggleModal('EMA')}
-              style={{ color: activeIndicators.includes('EMA') ? '#3f87ff' : '#fff' }} className="d-flex align-items-center justify-content-between">
-              EMA  {activeIndicators.includes('EMA') && <i className="ri-check-line text-success"></i>}
-            </DropdownItem>
-            <DropdownItem onClick={() => toggleModal('SMA')}
-              style={{ color: activeIndicators.includes('SMA') ? '#3f87ff' : '#fff' }}
-              className="d-flex align-items-center justify-content-between">
-              SMA {activeIndicators.includes('SMA') && <i className="ri-check-line text-success"></i>}
-            </DropdownItem>
-            <DropdownItem onClick={() => toggleModal('WMA')}
-              style={{ color: activeIndicators.includes('WMA') ? '#3f87ff' : '#fff' }}
-              className="d-flex align-items-center justify-content-between">
-              WMA {activeIndicators.includes('WMA') && <i className="ri-check-line text-success"></i>}
-            </DropdownItem>
-            <DropdownItem onClick={() => toggleModal('BB')}
-              style={{ color: activeIndicators.includes('BB') ? '#3f87ff' : '#fff' }}
-              className="d-flex align-items-center justify-content-between">
-              Bollinger Bands {activeIndicators.includes('BB') && <i className="ri-check-line text-success"></i>}
-            </DropdownItem>
-            {/* <DropdownItem onClick={() => toggleIndicator('RSI')} style={{ color: '#fff' }}>RSI</DropdownItem>
-              <DropdownItem onClick={() => toggleIndicator('MACD')} style={{ color: '#fff' }}>MACD</DropdownItem>
-              <DropdownItem onClick={() => toggleIndicator('Volume')} style={{ color: '#fff' }}>Volume Bars</DropdownItem>
-              <DropdownItem onClick={() => toggleIndicator('ATR')} style={{ color: '#fff' }}>ATR</DropdownItem>
-              <DropdownItem onClick={() => toggleIndicator('Stochastic')} style={{ color: '#fff' }}>Stochastic Oscillator</DropdownItem> */}
-            <DropdownItem divider />
-            <DropdownItem onClick={clearAllIndicators} style={{ color: 'red' }}>Clear All Indicators</DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
+
         {/* </div> */}
         <Modal isOpen={modal} toggle={toggleModal} className='invoice-modal' >
           <ModalBody>
@@ -2633,7 +2485,7 @@ const TradingViewChart2 = () => {
         </div>
       )} */}
 
-      <div ref={chartContainerRef} className="chart-container" style={{ position: 'relative' }}>
+      <div ref={chartContainerRef} className="chart-container" style={{ position: 'relative', background: "linear-gradient(to bottom, #2a0040, #4b0082)" }}>
         {tooltipVisible && tooltipData && (
           <div
             ref={tooltipRef}
@@ -2671,7 +2523,7 @@ const TradingViewChart2 = () => {
       </div>
 
       <div className="binary-trade-container mt-0 p-1 " style={{
-        backgroundColor: terminalPath ? "#010e1c" : "black", border: "red 3px solid "
+        // backgroundColor: terminalPath ? "#010e1c" : "black", border: "red 3px solid "
       }}>
         {/* {selectedOption && (
           <div className="selected-info d-flex justify-content-center align-items-center p-2 mb-2">

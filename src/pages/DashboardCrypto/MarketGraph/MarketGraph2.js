@@ -71,7 +71,7 @@ const MarketGraph = () => {
 
     return (
         <React.Fragment>
-            <div className="page-content" style={{ border: "red 3px solid " }}>
+            <div className="page-content">
                 <div className="container-fluid p-0" >
                     <Card className='mb-0 dc-card h-100 position-relative' >
                         {/* {!isMobile && (

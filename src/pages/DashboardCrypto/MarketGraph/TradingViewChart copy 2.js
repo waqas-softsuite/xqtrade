@@ -1094,7 +1094,7 @@ const TradingViewChart2 = () => {
 
 
 
- const handleAddPointer = (type, testResponse) => {
+  const handleAddPointer = (type, testResponse) => {
     if (orderCount >= 10) {
       showToastMessage("Maximum order limit reached (10/10)");
       return;
@@ -2482,7 +2482,7 @@ const TradingViewChart2 = () => {
       </div>
 
       <div className="binary-trade-container mt-0 p-1" style={{
-        backgroundColor: terminalPath ? "#010e1c" : "black"
+        // backgroundColor: terminalPath ? "#010e1c" : "black"
       }}>
         {/* {selectedOption && (
           <div className="selected-info d-flex justify-content-center align-items-center p-2 mb-2">

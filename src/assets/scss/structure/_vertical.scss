@@ -17,7 +17,7 @@
 
     @media (min-width: 768px) {
         margin-left: var(--#{$prefix}vertical-menu-width);
-        margin-top: 56px !important;
+        margin-top: 100px !important;
         display: flex;
     }
 }
@@ -27,6 +27,7 @@
     // padding: calc(#{$header-height} + #{$grid-gutter-width}) calc(#{$grid-gutter-width} * 0.5) $footer-height calc(#{$grid-gutter-width} * 0.5);
     padding-inline: 0;
     padding-bottom: 0;
+
     @media (max-width: 767px) {
         padding: calc(30px + #{$grid-gutter-width}) calc(0.5rem * 0.5) 30px calc(0.5rem * 0.5) !important;
         padding-bottom: 10px !important;

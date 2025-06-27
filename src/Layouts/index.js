@@ -8,6 +8,7 @@ import Sidebar from "./Sidebar";
 import Footer from "./Footer";
 import RightSidebar from "../Components/Common/RightSidebar";
 import { logoLight } from "../utils/config";
+import Side_bar from "./Side_Bar";
 
 
 //import actions
@@ -153,7 +154,7 @@ const Layout = (props) => {
 
   return (
     <React.Fragment>
-      <div id="layout-wrapper">
+      <div id="layout-wrapper" style={{ padding: "5px" }} >
         <Header
           headerClass={headerClass}
           layoutModeType={layoutModeType}
@@ -169,32 +170,26 @@ const Layout = (props) => {
               {/* <TradingModal /> */}
 
               <div className="flex " style={{ display: 'flex', justifyContent: "space-between", width: '100%' }}>
-                <div className="nav-btn-sidebar bg-red-200" style={{ border: "3px solid red", marginRight: "10px" }}>
+                <div className="nav-btn-sidebar bg-red-200" >
+                  <Side_bar />
+                </div>
+
+                <Row className="main-cnt-row">
+                  <Col id="main_cnt_desktop" >
+                    {props.children}
+                  </Col>
+                </Row>
+                <div className="nav-btn-sidebar bg-yellow-200" style={{ border: "3px solid orange", marginRight: "10px" }}>
                   <img style={{ marginTop: '19px' }} src={logoLight} alt="" />
                   <TabButtonsComponent />
                   <div></div>
                 </div>
-
-                <div className="nav-btn-sidebar bg-green-200" style={{ border: "3px solid green", marginRight: "10px" }}>
-                  <img style={{ marginTop: '19px' }} src={logoLight} alt="" />
-                  <TabButtonsComponent />
-                  <div></div>
-                </div>
-
-                <div className="nav-btn-sidebar bg-blue-200" style={{ border: "3px solid blue", marginRight: "10px" }}>
-                  <img style={{ marginTop: '19px' }} src={logoLight} alt="" />
-                  <TabButtonsComponent />
-                  <div></div>
-                </div>
-
                 <div className="nav-btn-sidebar bg-yellow-200" style={{ border: "3px solid orange", marginRight: "10px" }}>
                   <img style={{ marginTop: '19px' }} src={logoLight} alt="" />
                   <TabButtonsComponent />
                   <div></div>
                 </div>
               </div>
-
-
 
             </>
           ) : (
