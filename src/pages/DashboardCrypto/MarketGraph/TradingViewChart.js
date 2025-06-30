@@ -22,7 +22,7 @@ import { toast, ToastContainer } from "react-toastify";
 import socket from "../../../utils/socket";
 import CurrencySelector from "../../../Layouts/AssetSelector";
 import TopActionBar from "../../../Layouts/TopActionBar";
-
+import trading from "../../../assets/images/background.jpg";
 function calculateRSI(data, period = 14) {
   let gains = 0, losses = 0;
   const rsi = [];
@@ -1881,7 +1881,7 @@ const TradingViewChart2 = () => {
       layout: {
         background: {
           type: "solid",
-          color: layoutMode === "dark" ? "#010e1c" : "#ffffff",
+          color: "transparent", // Make chart background transparent for bg image
         },
         textColor: layoutMode === "dark" ? "#ffffff" : "#000000",
       },
@@ -2486,7 +2486,12 @@ const TradingViewChart2 = () => {
         </div>
       )} */}
 
-      <div ref={chartContainerRef} className="chart-container" style={{ position: 'relative' }}>
+      <div ref={chartContainerRef} className="chart-container" style={{ position: 'relative', 
+        backgroundImage: `url(${trading})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}>
         {tooltipVisible && tooltipData && (
           <div
             ref={tooltipRef}
@@ -2494,7 +2499,7 @@ const TradingViewChart2 = () => {
               position: 'absolute',
               left: `${tooltipPosition.x + 15}px`,
               top: `${tooltipPosition.y}px`,
-              backgroundColor: layoutMode === "dark" ? 'rgba(26, 29, 33, 0.9)' : 'rgba(255, 255, 255, 0.9)',
+              // backgroundColor: layoutMode === "dark" ? 'rgba(26, 29, 33, 0.9)' : 'rgba(255, 255, 255, 0.9)',
               border: `1px solid ${layoutMode === "dark" ? '#4a4a4a' : '#c1c1c1'}`,
               padding: '8px',
               borderRadius: '4px',
