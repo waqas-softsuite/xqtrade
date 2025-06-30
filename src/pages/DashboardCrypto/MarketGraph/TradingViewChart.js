@@ -2253,7 +2253,7 @@ const TradingViewChart2 = () => {
 
 
   return (
-    <div className="chart-wrapper" >
+    <div className="chart-wrapper " style={{paddingLeft:"20px"}} >
       {orderSuccessAlertPending && (
         <Alert
           style={{ zIndex: 9999, color: "#ffffff", position: 'absolute', width: '100%', backgroundColor: "darkgreen" }}

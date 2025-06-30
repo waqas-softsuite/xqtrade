@@ -31,6 +31,7 @@ const TopActionBar = () => {
                     justifyContent: "space-between",
                     backgroundColor: "#160e2f",
                     padding: "8px 12px",
+                    marginLeft: "10px",
                     borderRadius: "10px",
                     alignItems: "center",
                     marginBottom: "10px",
