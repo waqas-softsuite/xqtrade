@@ -21,6 +21,7 @@ import IndicatorsSettings from "./IndicatorsSettings";
 import { toast, ToastContainer } from "react-toastify";
 import socket from "../../../utils/socket";
 import CurrencySelector from "../../../Layouts/AssetSelector";
+import TopActionBar from "../../../Layouts/TopActionBar";
 
 function calculateRSI(data, period = 14) {
   let gains = 0, losses = 0;
@@ -2252,9 +2253,7 @@ const TradingViewChart2 = () => {
 
 
   return (
-    <div className="chart-wrapper" style={{
-      background: "linear-gradient(to bottom, #2a0040, #4b0082)"
-    }}>
+    <div className="chart-wrapper" >
       {orderSuccessAlertPending && (
         <Alert
           style={{ zIndex: 9999, color: "#ffffff", position: 'absolute', width: '100%', backgroundColor: "darkgreen" }}
@@ -2336,9 +2335,11 @@ const TradingViewChart2 = () => {
       </div>
 
 
-      <div className="chart-topbar w-100 bg-dark d-flex align-items-center gap-2 p-2">
+      <div className="chart-topbar w-100  d-flex align-items-center gap-2 p-2">
 
-        <CurrencySelector />
+        <div>
+          <TopActionBar />
+        </div>
 
         {/* <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown} className="btn btn-outline-light">
           <DropdownToggle tag="i" className="ri-hourglass-fill" style={{ cursor: 'pointer' }} />
@@ -2485,7 +2486,7 @@ const TradingViewChart2 = () => {
         </div>
       )} */}
 
-      <div ref={chartContainerRef} className="chart-container" style={{ position: 'relative', background: "linear-gradient(to bottom, #2a0040, #4b0082)" }}>
+      <div ref={chartContainerRef} className="chart-container" style={{ position: 'relative' }}>
         {tooltipVisible && tooltipData && (
           <div
             ref={tooltipRef}
@@ -2522,159 +2523,7 @@ const TradingViewChart2 = () => {
         )}
       </div>
 
-      <div className="binary-trade-container mt-0 p-1 " style={{
-        // backgroundColor: terminalPath ? "#010e1c" : "black", border: "red 3px solid "
-      }}>
-        {/* {selectedOption && (
-          <div className="selected-info d-flex justify-content-center align-items-center p-2 mb-2">
-            <span className="text-white">
-              {selectedOption.type === "time" ? `Time: ${selectedOption.value}` : `Price: ${selectedOption.value}`}
-            </span>
 
-          </div>
-        )} */}
-
-        <Row>
-          <Col xs={6} className="pe-1 timer-col">
-            <FormGroup className="incremental-frm timer-frm d-flex align-items-center gap-point-1 mb-0">
-              <Button className="border-0 col-01" onClick={handleDecrement} style={{ backgroundColor: "#262a2f", borderRadius: "5px 0px 0px 5px" }}>-</Button>
-
-              <Label className="d-md-inline-block d-none fw-bold" style={{ marginBottom: "-45px", marginLeft: '5px', position: 'relative', zIndex: 9999, }} >{t("Duration")}</Label>
-
-              <Input
-                type="text"
-                value={formatTime(time)}
-                onClick={() => setShowTimePicker(true)}
-                readOnly
-                className="time-picker-input text-center text-white col-02 position-relative"
-                style={{
-                  backgroundColor: terminalPath ? "#262a2f" : "#000",
-                  border: '1px solid #262a2f',
-                  borderRadius: "0px", padding: "0.37rem 0.9rem", fontSize: "1rem"
-                }}
-              />
-
-              {showTimePicker && (
-                <div className="position-absolute  mt-1 z-1" style={{ top: "-6px", left: "15px", width: '95%' }}>
-                  <Input
-                    type="time"
-                    value={getCurrentTime()}
-                    onChange={handleTimeChange}
-                    onBlur={() => setShowTimePicker(false)}
-                    max="23:59"
-                    autoFocus
-                    className="w-100"
-                  />
-                </div>
-              )}
-              <Button className="border-0 col-03" onClick={handleIncrement} style={{ backgroundColor: "#262a2f", borderRadius: "0px 5px 5px 0px" }}>+</Button>
-            </FormGroup>
-          </Col>
-          <Col xs={6} className="ps-0 price-col">
-            <FormGroup className="incremental-frm d-flex align-items-center gap-point-1 mb-1">
-              <Button className="border-0 col-01" onClick={handlePriceDecrease} style={{ backgroundColor: "#262a2f", borderRadius: "5px 0px 0px 5px" }}>-</Button>
-
-              <Label className="d-md-inline-block d-none fw-bold" style={{ marginBottom: "-45px", marginLeft: '5px', position: 'relative', zIndex: 9999, }} >{t("Amount")}</Label>
-
-              <Input
-                type="text"
-                value={`$${price}`}
-                onChange={handleInputChange}
-                onBlur={handleBlur} // Ensures the price is valid on blur
-                className="price-picker-input text-center border-0 text-white col-02"
-                style={{ borderRadius: "0px", padding: "0.37rem 0.9rem", fontSize: "1rem" }}
-              />
-              <Button className="border-0 col-03" onClick={handlePriceIncrease} style={{ backgroundColor: "#262a2f", borderRadius: "0px 5px 5px 0px" }}>+</Button>
-            </FormGroup>
-          </Col>
-        </Row>
-        {
-          symbolMarketActive && (
-            <Row className="justify-content-between align-items- mb-md-1 mb-5 binary-bs">
-              <Col xs={5} className="pe-0 b-col-1">
-                <Button
-                  size="lg"
-                  color="danger"
-                  className="d-flex justify-content-between align-items-center gap-1 w-100 text-dark fw-bold buy-b-btn"
-                  style={
-                    selectedOption && isMobile
-                      ? { fontSize: "14px", paddingInline: "5px" }
-                      : {}
-                  }
-                  onClick={() =>
-                    selectedOption
-                      ? handlePlacePendingOrder("put")
-                      : handlePlaceOrder("put")
-                  }
-                  disabled={
-                    // orderCount >= 10 
-                    // ||
-                    !symbolMarketActive}
-                >
-                  {selectedOption ? t("Pending Sell") : t("Sell")} <i className="ri-arrow-down-fill"></i>
-                </Button>
-
-              </Col>
-
-              <Col xs={2} style={{ padding: '0px 3px' }} className="b-col-2">
-                {selectedOption ? (
-                  <div onClick={() => setSelectedOption(null)}
-                    className="text-center w-100 fw-bold binary-time-ico cursor-pointer"
-                    style={{ paddingBlock: "0.39rem", backgroundColor: "#262a2f", borderRadius: "5px" }}>
-                    <i className="ri-close-fill" style={{ fontSize: "24px" }}></i>
-
-                  </div>
-                ) : (
-                  <div onClick={toggleTimePickerModel} className="text-center w-100 fw-bold binary-time-ico cursor-pointer"
-                    style={{ paddingBlock: "0.39rem", backgroundColor: "#262a2f", borderRadius: "5px" }}>
-                    <i className="ri-time-fill" style={{ fontSize: "24px" }}></i>
-                  </div>
-                )}
-              </Col>
-
-
-              <Col xs={5} className="ps-0 b-col-3">
-                <Button
-                  size="lg"
-                  color="success"
-                  className={`d-flex justify-content-between align-items-center gap-1 w-100 text-dark fw-bold sell-b-btn`}
-                  style={
-                    selectedOption && isMobile
-                      ? { fontSize: "14px", paddingInline: "5px" }
-                      : {}
-                  }
-                  onClick={() =>
-                    selectedOption
-                      ? handlePlacePendingOrder("call")
-                      : handlePlaceOrder("call")
-                  }
-                  disabled={
-                    // orderCount >= 10 ||
-                    !symbolMarketActive}
-                >
-                  {selectedOption ? t("Pending Buy") : t("Buy")} <i className="ri-arrow-up-fill"></i>
-                </Button>
-
-              </Col>
-            </Row>
-          )
-        }
-
-
-
-        {
-          !symbolMarketActive && (
-            <div className="text-center text-danger mt-2 fw-bold" style={{ fontSize: '24px' }}>
-              <i className="ri-error-warning-fill"></i> Market is Closed for this Symbol.
-            </div>
-          )
-        }
-        {
-          symbolMarketActive && (
-            <h3 className="d-none d-md-block" style={{ color: 'white', padding: '10px', borderRadius: '5px', fontSize: '16px' }}>{t("Profit")}: + {(symbolPercentage * price) / 100}</h3>
-          )
-        }
-      </div>
 
       <TimePickerModal
         isOpen={timePickerModel}

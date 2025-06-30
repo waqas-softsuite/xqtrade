@@ -1318,13 +1318,13 @@ $focus-color: rgba(105, 255, 65, 1);
   position: relative;
   width: 100%;
   height: 100%;
-  background: "linear-gradient(to bottom, #2a0040, #4b0082)"
-    // background-color: #000000;
+  // background: "linear-gradient(to bottom, #2a0040, #4b0082)"
+  // background-color: #000000;
 
-    /* Ensures full visibility on different screens */
-    // .binary-trade-container {
-    // background-color: #000000;
-    // }
+  /* Ensures full visibility on different screens */
+  // .binary-trade-container {
+  // background-color: #000000;
+  // }
 
 }
 
@@ -1501,7 +1501,7 @@ $focus-color: rgba(105, 255, 65, 1);
     width: 100%;
     bottom: 0;
     z-index: 999;
-    background-color: #000000;
+    // background-color: #000000;
     flex-wrap: nowrap;
 
     li {

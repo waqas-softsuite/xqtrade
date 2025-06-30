@@ -655,12 +655,9 @@ const XQChart = () => {
 
 
   return (
-    <div className="page-content pt-1 xq-chart-top-wraper" style={{ border: "red 3px solid " }}>
+    <div className="page-content pt-1 xq-chart-top-wraper" >
       <div className="container-fluid p-0">
         <div className="chart-wrapper">
-
-
-
 
           <div className="chart-topbar w-100 bg-dark d-flex align-items-center gap-2 p-2">
             <Select
