@@ -2253,7 +2253,7 @@ const TradingViewChart2 = () => {
 
 
   return (
-    <div className="chart-wrapper " style={{paddingLeft:"20px"}} >
+    <div className="chart-wrapper " style={{paddingLeft:"20px "}} >
       {orderSuccessAlertPending && (
         <Alert
           style={{ zIndex: 9999, color: "#ffffff", position: 'absolute', width: '100%', backgroundColor: "darkgreen" }}
@@ -2492,6 +2492,18 @@ const TradingViewChart2 = () => {
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
       }}>
+        {/* Dark overlay for better contrast */}
+        <div className="chart-bg-overlay" style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          background: 'rgba(20, 20, 20, 0.55)', // adjust opacity as needed
+          zIndex: 1,
+          pointerEvents: 'none',
+        }} />
+        {/* Chart and tooltips go above overlay */}
         {tooltipVisible && tooltipData && (
           <div
             ref={tooltipRef}
