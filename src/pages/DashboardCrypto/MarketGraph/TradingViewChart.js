@@ -23,6 +23,7 @@ import socket from "../../../utils/socket";
 import CurrencySelector from "../../../Layouts/AssetSelector";
 import TopActionBar from "../../../Layouts/TopActionBar";
 import trading from "../../../assets/images/background.jpg";
+import TradingSignalsInterface from "../../../Layouts/TradingSignalsInterface";
 function calculateRSI(data, period = 14) {
   let gains = 0, losses = 0;
   const rsi = [];
@@ -2253,7 +2254,7 @@ const TradingViewChart2 = () => {
 
 
   return (
-    <div className="chart-wrapper " style={{paddingLeft:"20px "}} >
+    <div className="chart-wrapper " style={{ paddingLeft: "20px " }} >
       {orderSuccessAlertPending && (
         <Alert
           style={{ zIndex: 9999, color: "#ffffff", position: 'absolute', width: '100%', backgroundColor: "darkgreen" }}
@@ -2486,7 +2487,8 @@ const TradingViewChart2 = () => {
         </div>
       )} */}
 
-      <div ref={chartContainerRef} className="chart-container" style={{ position: 'relative', 
+      <div ref={chartContainerRef} className="chart-container" style={{
+        position: 'relative',
         backgroundImage: `url(${trading})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -2539,6 +2541,8 @@ const TradingViewChart2 = () => {
           </div>
         )}
       </div>
+
+      <TradingSignalsInterface />
 
 
 

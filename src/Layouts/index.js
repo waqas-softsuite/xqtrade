@@ -179,12 +179,15 @@ const Layout = (props) => {
                     {props.children}
                   </Col>
                 </Row>
-                <div className="nav-btn-sidebar bg-yellow-200" style={{ border: "3px solid orange", marginRight: "10px" }}>
+                {/*
+                  <div className="nav-btn-sidebar bg-yellow-200" style={{ border: "3px solid orange", marginRight: "10px" }}>
                   <img style={{ marginTop: '19px' }} src={logoLight} alt="" />
                   <TabButtonsComponent />
                   <div></div>
                 </div>
-                <div className="nav-btn-sidebar bg-yellow-200" style={{ border: "3px solid orange", marginRight: "10px" }}>
+                  
+                  */}
+                <div className="nav-btn-sidebar " style={{ marginRight: "10px", marginLeft: "15px" }}>
                   <img style={{ marginTop: '19px' }} src={logoLight} alt="" />
                   <TabButtonsComponent />
                   <div></div>

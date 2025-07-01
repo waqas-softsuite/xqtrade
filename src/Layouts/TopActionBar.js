@@ -71,7 +71,7 @@ const TopActionBar = () => {
                                 cursor: "pointer",
                             }}
                         >
-                            <Icon size={14} />
+                            <Icon size={20} />
                         </div>
                     ))}
                 </div>
