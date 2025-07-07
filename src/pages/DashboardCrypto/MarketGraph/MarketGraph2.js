@@ -72,21 +72,19 @@ const MarketGraph = () => {
     return (
         <React.Fragment>
             <div className="page-content">
-                <div className="container-fluid p-0"
-
-                >
-                    <Card className='mb-0  h-100 position-relative' >
+                <div className="container-fluid p-0">
+                    <Card className='mb-0 dc-card h-100 position-relative' >
                         {/* {!isMobile && (
                             <CardHeader className="border-0 align-items-center d-flex border-bottom">
                                 <h4 className="card-title mb-0 flex-grow-1">Market Graph</h4>
                             </CardHeader>
                         )} */}
-                        <CardBody style={{ height: '100%' }} className="p-0 symbols-chart ">
+                        <CardBody style={{ height: '100%' }} className="p-0 symbols-chart bg-black">
 
                             {/* <div id="tradingview-widget-container" style={{ height: '100%', width: '100%' }}>
                         <div className="tradingview-widget-container__widget"></div>
                     </div> */}
-                            <TradingViewChart />
+                            <TradingViewChart/>
                             {/* <LightweightChart /> */}
                             {/* <ApexChart/> */}
 

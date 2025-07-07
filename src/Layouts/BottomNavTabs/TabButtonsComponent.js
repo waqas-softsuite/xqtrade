@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { Nav, NavItem, NavLink } from 'reactstrap';
-import classnames from 'classnames';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import finance from "../../assets/images/Trades.png";
+import signal from "../../assets/images/Terminals.png";
+import markete from "../../assets/images/Market.png";
+import Achivements from "../../assets/images/Event.png";
+import help from "../../assets/images/Help.png";
+
 const TabButtonsComponent = () => {
     const [searchParams, setSearchParams] = useSearchParams();
-    const [activeTab, setActiveTab] = useState(null); // Start with no tab active
+    const [activeTab, setActiveTab] = useState(null);
     const navigate = useNavigate();
     const { t } = useTranslation();
     const isMobile = window.innerWidth < 768;
+
     const toggleTab = (tab) => {
         const isMobile = window.innerWidth < 768;
-    
+
         if (tab === "1") {
             navigate(`/dashboard`);
             setActiveTab("1");
         } else {
             if (activeTab !== tab) {
                 setActiveTab(tab);
-    
+
                 if (isMobile) {
                     // Mobile behavior (use ?tab=2, etc.)
                     setSearchParams({ tab });
@@ -49,10 +54,11 @@ const TabButtonsComponent = () => {
             }
         }
     };
+
     useEffect(() => {
         const isMobile = window.innerWidth < 768;
         if (!isMobile) return;
-    
+
         const tabFromUrl = searchParams.get('tab');
         if (tabFromUrl && ['1', '2', '3', '4', '5'].includes(tabFromUrl)) {
             setActiveTab(tabFromUrl);
@@ -60,20 +66,13 @@ const TabButtonsComponent = () => {
             setActiveTab(null);
         }
     }, [searchParams]);
-    
-    // tab 2 = /active-trades
-    // tab 3 = /market
-    // tab 4 = /events
-    // tab 5 = /help
-
-
 
     useEffect(() => {
         // Get the tab from the URL search params
         const tabFromUrl = searchParams.get('tab');
 
-        // Set the active tab if it's valid (1, 2, or 3)
-        if (tabFromUrl && ['1', '2', '3', '4','5'].includes(tabFromUrl)) {
+        // Set the active tab if it's valid (1, 2, 3, 4, 5)
+        if (tabFromUrl && ['1', '2', '3', '4', '5'].includes(tabFromUrl)) {
             setActiveTab(tabFromUrl);
         } else {
             setActiveTab(null); // If the tab is invalid or not present, reset active tab
@@ -83,80 +82,127 @@ const TabButtonsComponent = () => {
     const layout = useSelector(state => state.Layout);
     const layoutMode = layout?.layoutModeType;
     const bgClass = layoutMode === 'dark' ? 'bg-black' : 'bg-white';
-    if(isMobile){
-        var idname="mbl-v-bottom-tabs";
-        var classes="mobile-view-bottom-tabs mobile-bottom-tabs position-fixed w-100 start-0 end-0 px-2 "+bgClass
-    }else{
-        var idname="";
-        var classes=""
-    }
+
+    // Helper function to get active styles
+    const getItemStyle = (tabId) => ({
+        color: activeTab === tabId ? "#BE1984" : "#B8A9DC",
+        textAlign: "center",
+        fontSize: "10px",
+        fontWeight: "600",
+        letterSpacing: "0.5px",
+        cursor: "pointer",
+        transition: "all 0.3s ease"
+    });
+
+    // Helper function to get image style
+    const getImageStyle = (tabId) => ({
+        height: "50px",
+        filter: activeTab === tabId
+            ? "brightness(0) saturate(100%) invert(17%) sepia(60%) saturate(7476%) hue-rotate(292deg) brightness(90%) contrast(98%)"
+            : "none"
+    });
+
+    const getIconContainerStyle = (tabId) => ({
+        background: "transparent",
+        borderRadius: "12px",
+        padding: "4px",
+        margin: "2px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+    });
+
     return (
-       
-        <>
-            <Nav pills className="nav-justified card-footer-tabs fs-17 pb-2">
-                <NavItem id="home" className='w-100'>
-                    <NavLink
-                        style={{ cursor: "pointer" }}
-                        className={classnames({ active: activeTab === "1" })}
-                        onClick={() => toggleTab("1")}
-                    >
-                        <i style={{ fontSize: "22px" }} className="ri-home-line"></i>
-                        <p style={{ fontSize: "10px" }} className="mobil-tabls-menu-title mb-0">{t('Terminals')}</p>
-                    </NavLink>
-                </NavItem>
-                <NavItem id="quotes" className='w-100'>
-                    <NavLink
-                        style={{ cursor: "pointer" }}
-                        className={classnames({ active: activeTab === "2" })}
-                        onClick={() => toggleTab("2")}
-                    >
-                        <i style={{ fontSize: "22px" }} className="ri-arrow-up-down-line"></i>
-                        <p style={{ fontSize: "10px" }} className="mobil-tabls-menu-title mb-0">{t('Trades')}</p>
-                    </NavLink>
-                </NavItem>
-                <NavItem id="market" className='w-100'>
-                    <NavLink
-                        style={{ cursor: "pointer" }}
-                        className={classnames({ active: activeTab === "3" })}
-                        onClick={() => toggleTab("3")}
-                    >
-                        <i style={{ fontSize: "22px" }} className="ri-shopping-bag-2-line"></i>
-                        <p style={{ fontSize: "10px" }} className="mobil-tabls-menu-title mb-0">{t('Market')}</p>
-                    </NavLink>
-                </NavItem>
-                <NavItem id="trading" className='w-100'> 
-                    <NavLink
-                        style={{ cursor: "pointer" }}
-                        className={classnames({ active: activeTab === "4" })}
-                        onClick={() => toggleTab("4")}
-                    >
-                        <i style={{ fontSize: "22px" }} className="ri-trophy-line"></i>
-                        <p style={{ fontSize: "10px" }} className="mobil-tabls-menu-title mb-0">{t('Events')}</p>
-                    </NavLink>
-                </NavItem>
-                <NavItem id="market-graph" className='w-100'>
-                    <NavLink
-                        style={{ cursor: "pointer" }}
-                        className={classnames({ active: activeTab === "5" })}
-                        onClick={() => toggleTab("5")}
-                    >
-                        <i style={{ fontSize: "22px" }} className="ri-questionnaire-line"></i>
-                        <p  style={{ fontSize: "10px" }}className="mobil-tabls-menu-title mb-0">{t('Helps')}</p>
-                    </NavLink>
-                </NavItem>
-                {/* <NavItem id="settings">
-                    <NavLink
-                        style={{ cursor: "pointer" }}
-                        className={classnames({ active: activeTab === "6" })}
-                        onClick={() => toggleTab("6")}
-                    >
-                        <i style={{ fontSize: "28px" }} className="ri-settings-5-line"></i>
-                        <p style={{ fontSize: "10px" }} className="mobil-tabls-menu-title mb-0">Setting</p>
-                    </NavLink>
-                </NavItem> */}
-            </Nav>
-        </>
-);
+        <div
+            style={{
+                width: "70px",
+                marginLeft: "20px",
+                height: "89%",
+                background: "linear-gradient(180deg, #1F0E27)",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "space-between",
+                borderRadius: "12px",
+            }}
+        >
+            {/* Top icons */}
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "5px",
+                    marginTop: "36px",
+                    flexGrow: 1
+                }}
+            >
+                {/* SIGNALS - Tab 1 */}
+                <div
+                    style={getItemStyle("1")}
+                    onClick={() => toggleTab("1")}
+                >
+                    <div style={getIconContainerStyle("1")}>
+                        <img src={signal} alt="" style={getImageStyle("1")} />
+                    </div>
+                    <div>{t('SIGNALS')}</div>
+                </div>
+
+                {/* TRADES - Tab 2 */}
+                <div
+                    style={getItemStyle("2")}
+                    onClick={() => toggleTab("2")}
+                >
+                    <div style={getIconContainerStyle("2")}>
+                        <img src={finance} alt="" style={getImageStyle("2")} />
+                    </div>
+                    <div>{t('TRADES')}</div>
+                </div>
+
+                {/* MARKET - Tab 3 */}
+                <div
+                    style={getItemStyle("3")}
+                    onClick={() => toggleTab("3")}
+                >
+                    <div style={getIconContainerStyle("3")}>
+                        <img src={markete} alt="" style={getImageStyle("3")} />
+                    </div>
+                    <div>{t('MARKET')}</div>
+                </div>
+
+                {/* EVENTS - Tab 4 */}
+                <div
+                    style={getItemStyle("4")}
+                    onClick={() => toggleTab("4")}
+                >
+                    <div style={getIconContainerStyle("4")}>
+                        <img src={Achivements} alt="" style={getImageStyle("4")} />
+                    </div>
+                    <div>{t('EVENTS')}</div>
+                </div>
+            </div>
+
+            {/* Bottom help icon - Tab 5 */}
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    marginBottom: "100px"
+                }}
+            >
+                <div
+                    style={getItemStyle("5")}
+                    onClick={() => toggleTab("5")}
+                >
+                    <div style={getIconContainerStyle("5")}>
+                        <img src={help} alt="" style={getImageStyle("5")} />
+                    </div>
+                    <div>{t('HELP')}</div>
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default TabButtonsComponent;

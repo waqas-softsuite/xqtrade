@@ -23,12 +23,12 @@ import { tradeGroups } from "../rtk/slices/crm-slices/trade/tradeGroups";
 import { getUser } from "../rtk/slices/crm-slices/user/getUserSlice";
 import LanguageSwitcher from "../Components/LanguageSwitcher";
 import { useTranslation } from 'react-i18next';
-import sqlogo from "../../src/assets/images/logoxq.png"
+import sqlogo from "../../src/assets/images/xq_logo.png"
 import { X, ChevronDown, CreditCard, User } from "lucide-react";
-import chat from "../../src/assets/images/icons gradient/chat.png"
-import { CiCreditCard1 } from "react-icons/ci";
-import profile from "../../src/assets/images/icons gradient/Profile.png";
-import { IoIosArrowDown } from "react-icons/io";
+import bounus from "../../src/assets/images/bounus.png"
+
+import profile from "../../src/assets/images/Group 14.png"; // Updated path to profile image
+import wallet from "../../src/assets/images/Wallet.png";
 
 const Header = ({ onChangeLayoutMode, layoutModeType, headerClass }) => {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
@@ -180,8 +180,8 @@ const Header = ({ onChangeLayoutMode, layoutModeType, headerClass }) => {
         id="page-topbar"
 
       >
-        <div className="layout-width " style={{ background: "#1F222A" }} >
-          <div className="navbar-header " style={{ paddingTop: "20px", paddingBottom: "30px", }}>
+        <div className="layout-width " >
+          <div className="navbar-header ">
 
 
             {
@@ -202,28 +202,8 @@ const Header = ({ onChangeLayoutMode, layoutModeType, headerClass }) => {
                         <img src={sqlogo} style={{ width: "150px", height: "25px", }} alt="XQTrade Logo" />
                       </div>
                     </div>
-                    <div className="liCZ0ygao-"></div>
-                    <div className="_3UzYnAjOc4">
-                      <div
-                        className="_1PRMjiCBcFTg"
-                        data-test="user-status-badge-starter"
-                        style={{ width: "16px", height: "16px", fontSize: "12px", }}
-                      >
-                        <svg
-                          aria-hidden="true"
-                          className="ohGHbMkZKR kuWzrsQ9Fp"
-                          focusable="false"
-                          role="presentation"
-                          viewBox="0 0 24 24"
-                          data-icon="icon-chevronstarterlist"
-                        >
-                          <path
-                            fill="#0094FF"
-                            d="M5 10.1 12 8l7 2.1V15l-7-2.1L5 15v-4.9Z"
-                          ></path>
-                        </svg>
-                      </div>
-                    </div>
+
+
                   </button>
                 </>
               ) : location.pathname === "/profile-settings" ||
@@ -348,121 +328,35 @@ const Header = ({ onChangeLayoutMode, layoutModeType, headerClass }) => {
 
 
 
-            <div className="d-flex align-items-center " style={{ width: "40%" }}>
+            <div className="d-flex align-items-center " >
 
               {/* Bonus Section */}
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: "5", marginRight: "10px", background: 'linear-gradient(to right, #6800ff, #000000)', borderRadius: "10px" }}>
-                <div>
-                  <img src={chat} alt="" style={{ height: '50px', borderRadius: '10px', padding: '5px' }} />
-                </div>
-                <div style={{ color: 'white' }}>
-                  <div style={{ fontSize: '15px', fontWeight: 'semibold', textShadow: '0 0 10px #6A65F1' }}>GET 50% BONUS</div>
-                  <div style={{ fontSize: '12px', color: '#D1D5DB', textShadow: '0 0 5px #6A65F1' }}>ON YOUR FIRST DEPOSIT</div>
-                </div>
-                <button
-                  style={{
-                    color: '#9CA3AF',
-                    background: 'none',
-                    border: 'none',
-                    height: '24px',
-                    width: '24px',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s',
-                    padding: 0,
-                    position: 'relative',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = 'white';
-                    e.currentTarget.style.backgroundColor = '#1A1A2E';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = '#9CA3AF';
-                    e.currentTarget.style.backgroundColor = 'transparent';
-                  }}
-                >
-                  <span style={{ position: 'absolute', top: '5%', left: '50%', fontSize: '20px', transform: 'translate(-50%, -50%)' }}>×</span>
-                </button>
-              </div>
-              { /*qrt section*/}
-              <div
-                style={{
-                  display: "inline-block",
-                  padding: "1px",
-                  borderRadius: "17px",
-                  background: "linear-gradient(90deg, #ff00ff, #8000ff)",
-                  position: "relative", // for positioning the icon
-                }}
-              >
-                <select
-                  style={{
-                    appearance: "none",
-                    WebkitAppearance: "none",
-                    MozAppearance: "none",
-                    backgroundColor: "#0f0f0f",
-                    color: "#ffffff",
-                    padding: "11px 29px 11px 10px", // space for icon
-                    border: "none",
-                    borderRadius: "17px",
-                    fontWeight: "500",
-                    fontFamily: "sans-serif",
-                    // fontSize: "14px",
-                    cursor: "pointer",
-                    paddingRight: "32px", // space for icon
-                  }}
-                  defaultValue="QT REAL USD"
-                >
-                  <option value="QT REAL USD" style={{ fontSize: "14px" }}>
-                    QT REAL USD
-                  </option>
-                  <option value="QT DEMO USD">QT DEMO USD</option>
-                  <option value="QT BITCOIN">QT BITCOIN</option>
-                </select>
 
-                {/* Custom arrow icon */}
-                <IoIosArrowDown
-                  style={{
-                    position: "absolute",
-                    right: "10px",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    pointerEvents: "none", // allows clicking through to select
-                    color: "#fff",
-                    fontSize: "18px",
-                  }}
-                />
-              </div>
+              { /*qrt section*
+                
+                /}
+             
 
               {/* Right Section */}
               <button
                 style={{
-                  background: 'linear-gradient(to right, #8000ff, #ff00ff)',
+                  // background: 'linear-gradient(to right, #8000ff, #ff00ff)',
                   border: 'none',
                   borderRadius: '18px',
                   padding: '3px 15px',
                   fontSize: '14px',
-                  gap: '15px',
+                  gap: '1px',
                   color: 'white',
                   display: 'flex',
                   alignItems: 'center',
                   cursor: 'pointer',
                   boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-                  marginLeft: '15px',
+                  marginLeft: '5px',
                   fontWeight: 'semibold',
                 }}
               >
-                <span
-                  style={{
-                    width: "40px", // Increased from 20px to 40px
-                    height: "40px", // Added height to match width for proportionality
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center"
-                  }}
-                >
-                  <CiCreditCard1 size={40} />
-                </span>
-                TOP UP
+                <img src={wallet} alt="wallet" style={{ width: "180px", background: "transparent" }} />
               </button>
               {/* profile Section */}
               <div
@@ -471,9 +365,7 @@ const Header = ({ onChangeLayoutMode, layoutModeType, headerClass }) => {
                   height: "40px",
                   borderRadius: "50%",
                   overflow: "hidden",
-                  border: "2px solid #8000ff", // optional gradient accent
-                  boxShadow: "0 0 5px rgba(128, 0, 255, 0.5)",
-                  marginLeft: "15px",
+
                 }}
               >
                 <img
@@ -509,8 +401,8 @@ const Header = ({ onChangeLayoutMode, layoutModeType, headerClass }) => {
         isOpen={isProfleSidebarOpen}
         toggle={() => setIsProfleSidebarOpen(false)}
       />
-      =
-    </React.Fragment>
+
+    </React.Fragment >
   );
 };
 

@@ -20,10 +20,7 @@ import { getAllSymbols } from "../../../rtk/slices/crm-slices/allSymbols/getAllS
 import IndicatorsSettings from "./IndicatorsSettings";
 import { toast, ToastContainer } from "react-toastify";
 import socket from "../../../utils/socket";
-import CurrencySelector from "../../../Layouts/AssetSelector";
-import TopActionBar from "../../../Layouts/TopActionBar";
-import trading from "../../../assets/images/background.jpg";
-import TradingSignalsInterface from "../../../Layouts/TradingSignalsInterface";
+
 function calculateRSI(data, period = 14) {
   let gains = 0, losses = 0;
   const rsi = [];
@@ -175,8 +172,18 @@ export const timeframes = {
   "1D": 86400
 };
 
+export const symbolCategory = [
+  'Crypto',
+  'Forex',
+  'Indices',
+  'Stocks',
+  'Commodities']
+
 
 const TradingViewChart2 = () => {
+
+  const [selectedCategory, setSelectedCategory] = useState('Category'); // default label
+
   const location = useLocation();
   const terminalPath = location.pathname === "/dashboard";
 
@@ -210,6 +217,7 @@ const TradingViewChart2 = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectDropdownOpen, setSelectDropdownOpen] = useState(false);
   const [seriesDropdownOpen, setSeriesDropdownOpen] = useState(false);
+  const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
   const [bars, setbars] = useState(100);
   const [isLoading, setIsLoading] = useState(false);
   const [ohlcData, setOhlcData] = useState({ open: 0, high: 0, low: 0, close: 0, time: null, color: "#2DA479" });
@@ -670,6 +678,7 @@ const TradingViewChart2 = () => {
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
   const toggleSelectDropdown = () => setSelectDropdownOpen(!selectDropdownOpen);
   const toggleSeriesDropdown = () => setSeriesDropdownOpen(!seriesDropdownOpen);
+  const toggleCategory = () => setCategoryDropdownOpen(!categoryDropdownOpen);
 
   const formatTime = (totalSeconds) => {
     if (totalSeconds < 60) {
@@ -1537,7 +1546,8 @@ const TradingViewChart2 = () => {
       });
       const sortedMarkers = [...markersRef.current].sort((a, b) => a.time - b.time);
       seriesRef.current?.setMarkers(sortedMarkers);
-      // seriesRef.current?.setMarkers(markersRef.current); 
+      // seriesRef.current?.setMarkers(markersRef.current);
+
     }
   }, []);
 
@@ -1568,8 +1578,15 @@ const TradingViewChart2 = () => {
         // size:3,
       };
     });
+
     seriesRef.current?.setMarkers(markersRef.current);
   }, [selectedSymbol, selectedTimeframe]);
+
+
+
+
+
+
 
   useEffect(() => {
     if (!chartRef.current || !seriesRef.current) return;
@@ -1671,6 +1688,8 @@ const TradingViewChart2 = () => {
 
   useEffect(() => {
 
+
+
     if (!selectedSymbol) {
       dispatch(setClickedSymbolData("BTCUSD"));
       return;
@@ -1691,6 +1710,8 @@ const TradingViewChart2 = () => {
           setIsLoading(false);
         });
     }
+
+
 
   }, [selectedSymbol, selectedSeriesType, dispatch]);
 
@@ -1738,6 +1759,9 @@ const TradingViewChart2 = () => {
         }
 
       });
+
+
+
 
       if (visibleRangeRef.current && bars > 1) {
         if (transformedData.length > 0) {
@@ -2254,7 +2278,9 @@ const TradingViewChart2 = () => {
 
 
   return (
-    <div className="chart-wrapper " style={{ paddingLeft: "20px " }} >
+    <div className="chart-wrapper" style={{
+      backgroundColor: terminalPath ? "#010e1c" : "black"
+    }}>
       {orderSuccessAlertPending && (
         <Alert
           style={{ zIndex: 9999, color: "#ffffff", position: 'absolute', width: '100%', backgroundColor: "darkgreen" }}
@@ -2336,11 +2362,95 @@ const TradingViewChart2 = () => {
       </div>
 
 
-      <div className="chart-topbar w-100  d-flex align-items-center gap-2 p-2">
+      <div className="chart-topbar w-100 bg-dark d-flex align-items-center gap-2 p-2">
 
-        <div>
-          <TopActionBar />
-        </div>
+        <Dropdown isOpen={categoryDropdownOpen} toggle={toggleCategory} className="btn btn-outline-light p-0 border-0">
+          <DropdownToggle className="btn btn-outline-light">
+            {selectedCategory}
+          </DropdownToggle>
+
+          <DropdownMenu
+            end
+            style={{ backgroundColor: '#010e1c', border: '1px solid #6c757d' }}
+          >
+            {symbolCategory.map((sc) => (
+              <DropdownItem
+                key={sc}
+                onClick={() => setSelectedCategory(sc)} // update selection
+                style={{
+                  color: selectedCategory === sc ? '#3f87ff' : '#fff',
+                  cursor: 'pointer',
+                }}
+                className="custom-dropdown-item"
+              >
+                {sc}
+              </DropdownItem>
+            ))}
+          </DropdownMenu>
+        </Dropdown>
+
+        <Dropdown isOpen={selectDropdownOpen} toggle={toggleSelectDropdown} className="symbol-select w-100">
+          <DropdownToggle
+            caret
+            className="w-100 btn btn-outline-light d-flex align-items-center gap-2"
+            style={{ backgroundColor: '#010e1c', borderColor: '#6c757d', height: '40px' }}
+          >
+            {/* <i className={icon} style={{ fontSize: '20px', color }} /> */}
+            <img src={selectedSymbolIcon} alt="icon images" width={30} height={30} />
+
+            <span>{selected}</span>
+          </DropdownToggle>
+
+          <DropdownMenu className="w-100" style={{ backgroundColor: '#010e1c', maxHeight: '300px', overflowY: 'auto' }}>
+            <div className="p-2">
+              <div className="d-flex align-items-center gap-2 mb-2">
+                <i className="ri-search-line" style={{ color: '#6c757d' }}></i>
+                <Input
+                  bsSize="sm"
+                  placeholder="Search symbol"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  style={{
+                    backgroundColor: '#010e1c',
+                    color: '#fff',
+                    borderColor: '#6c757d'
+                  }}
+                />
+              </div>
+            </div>
+            {filteredOptions.length > 0 ? (
+              filteredOptions.map(({ value, icon, color, percent }) => (
+                <DropdownItem
+                  key={value}
+                  onClick={() => {
+                    handleSelectChange({ value });
+                    setDropdownOpen(false);
+                    setSymbolPercentage(percent)
+                    setSymbolIcon(icon)
+                  }}
+                  active={value === selected}
+                  className="d-flex align-items-center gap-2"
+                  style={{
+                    backgroundColor: value === selected ? '#010e1c' : '#010e1c',
+                    color: '#fff',
+                    cursor: 'pointer'
+                  }}
+                >
+                  {/* <i className={icon} style={{ fontSize: '20px', color }} /> */}
+                  <img src={icon} alt="icon images" width={30} height={30} />
+                  <span className="d-flex justify-content-between align-items-center w-100">
+                    {value}
+                    <span className="badge text-secondary" style={{ fontSize: '13px', lineHeight: '13px', padding: '3px' }}>{percent}%</span>
+                  </span>
+                </DropdownItem>
+              ))
+            ) : (
+              <DropdownItem disabled className="text-muted text-center">
+                No matching symbols
+              </DropdownItem>
+            )}
+          </DropdownMenu>
+        </Dropdown>
 
         {/* <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown} className="btn btn-outline-light">
           <DropdownToggle tag="i" className="ri-hourglass-fill" style={{ cursor: 'pointer' }} />
@@ -2393,10 +2503,67 @@ const TradingViewChart2 = () => {
 
          */}
 
+        <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown} className="btn btn-outline-light p-0 border-0">
+          <DropdownToggle className="btn btn-outline-light">
+            <i className="ri-hourglass-fill" />
+          </DropdownToggle>
+
+          <DropdownMenu
+            end
+            style={{ backgroundColor: '#010e1c', border: '1px solid #6c757d' }}
+          >
+            {Object.keys(timeframes).map((tf) => (
+              <DropdownItem
+                key={tf}
+                onClick={() => {
+                  const invertedTF = tf.slice(-1).toUpperCase() + tf.slice(0, -1);
+                  setSelectedTimeframe(tf);
+                  setbars(100);
+
+                  if (seriesRef.current) {
+                    seriesRef.current.setData([]);
+                  }
+
+                  dispatch(fetchMarketDataHistory({ symbol: selectedSymbol, timeframe: invertedTF, bars }));
+                }}
+                style={{
+                  color: selectedTimeframe === tf ? '#3f87ff' : '#fff',
+                  // color: '#fff',
+                  cursor: 'pointer',
+                }}
+                className="custom-dropdown-item "
+              >
+                {tf} {selectedTimeframe === tf && (<i className="ri-check-line text-success"></i>)}
+              </DropdownItem>
+            ))}
+          </DropdownMenu>
+        </Dropdown>
 
 
-
-
+        <Dropdown isOpen={seriesDropdownOpen} toggle={toggleSeriesDropdown} className="btn btn-outline-light p-0 border-0">
+          {/* <DropdownToggle tag="i" className="ri-line-chart-line" style={{ cursor: 'pointer' }} /> */}
+          <DropdownToggle className="btn btn-outline-light">
+            <i className="ri-line-chart-line" />
+          </DropdownToggle>
+          <DropdownMenu end
+            style={{ backgroundColor: '#010e1c', border: '1px solid #6c757d' }}
+          >
+            {seriesTypes?.map((type) => (
+              <DropdownItem
+                key={type}
+                onClick={() => handleSeriesTypeChange(type)}
+                // className={selectedSeriesType === type ? "active" : ""}
+                style={{
+                  color: selectedSeriesType === type ? '#3f87ff' : '#fff',
+                  // color: '#fff',
+                  cursor: 'pointer',
+                }}
+              >
+                {type} {selectedSeriesType === type && (<i className="ri-check-line text-success"></i>)}
+              </DropdownItem>
+            ))}
+          </DropdownMenu>
+        </Dropdown>
 
 
 
@@ -2408,8 +2575,7 @@ const TradingViewChart2 = () => {
           <i className="ri-camera-fill"></i>
         </button> */}
 
-        {/*
-         <button
+        <button
           onClick={() => {
             chartRef.current.timeScale().scrollToRealTime();
           }}
@@ -2418,20 +2584,52 @@ const TradingViewChart2 = () => {
         >
           <i className="ri-rfid-line"></i>
         </button>
-        */}
 
 
         {/* <div style={{ display: "flex", alignItems: "center", gap: "10px", marginLeft: "10px" }}> */}
-
+        <Dropdown isOpen={indicatorDropdownOpen} toggle={() => setIndicatorDropdownOpen(!indicatorDropdownOpen)} className="btn btn-outline-light p-0 border-0">
+          {/* <DropdownToggle tag="i" className="ri-router-line" style={{ cursor: 'pointer' }} /> */}
+          <DropdownToggle className="btn btn-outline-light">
+            <i className="ri-router-line" />
+          </DropdownToggle>
+          <DropdownMenu style={{ backgroundColor: "#010e1c", borderColor: "#6c757d" }}>
+            <DropdownItem onClick={() => toggleModal('EMA')}
+              style={{ color: activeIndicators.includes('EMA') ? '#3f87ff' : '#fff' }} className="d-flex align-items-center justify-content-between">
+              EMA  {activeIndicators.includes('EMA') && <i className="ri-check-line text-success"></i>}
+            </DropdownItem>
+            <DropdownItem onClick={() => toggleModal('SMA')}
+              style={{ color: activeIndicators.includes('SMA') ? '#3f87ff' : '#fff' }}
+              className="d-flex align-items-center justify-content-between">
+              SMA {activeIndicators.includes('SMA') && <i className="ri-check-line text-success"></i>}
+            </DropdownItem>
+            <DropdownItem onClick={() => toggleModal('WMA')}
+              style={{ color: activeIndicators.includes('WMA') ? '#3f87ff' : '#fff' }}
+              className="d-flex align-items-center justify-content-between">
+              WMA {activeIndicators.includes('WMA') && <i className="ri-check-line text-success"></i>}
+            </DropdownItem>
+            <DropdownItem onClick={() => toggleModal('BB')}
+              style={{ color: activeIndicators.includes('BB') ? '#3f87ff' : '#fff' }}
+              className="d-flex align-items-center justify-content-between">
+              Bollinger Bands {activeIndicators.includes('BB') && <i className="ri-check-line text-success"></i>}
+            </DropdownItem>
+            {/* <DropdownItem onClick={() => toggleIndicator('RSI')} style={{ color: '#fff' }}>RSI</DropdownItem>
+              <DropdownItem onClick={() => toggleIndicator('MACD')} style={{ color: '#fff' }}>MACD</DropdownItem>
+              <DropdownItem onClick={() => toggleIndicator('Volume')} style={{ color: '#fff' }}>Volume Bars</DropdownItem>
+              <DropdownItem onClick={() => toggleIndicator('ATR')} style={{ color: '#fff' }}>ATR</DropdownItem>
+              <DropdownItem onClick={() => toggleIndicator('Stochastic')} style={{ color: '#fff' }}>Stochastic Oscillator</DropdownItem> */}
+            <DropdownItem divider />
+            <DropdownItem onClick={clearAllIndicators} style={{ color: 'red' }}>Clear All Indicators</DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
         {/* </div> */}
-        <Modal isOpen={modal} toggle={toggleModal} className='invoice-modal' >
+        <Modal data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" isOpen={modal} data-bs-toggle="modal" className='invoice-modal' >
           <ModalBody>
             <IndicatorsSettings onInputChange={handleSettings} indicatorName={selectedIndicator} />
           </ModalBody>
           <ModalFooter>
-            {/* <Button color="default" onClick={() => toggleModal()}>{t('Close')}</Button> */}
-            {/* <Button color="secondary" onClick={() => {toggleIndicator("EMA")}}>{t('Remove')}</Button> */}
-            <Button color="success" onClick={() => { editIndicators(); toggleIndicator(selectedIndicator); toggleModal(); }}>{t('Apply')}</Button>
+            <Button color="default" onClick={() => toggleModal()}>{t('Close')}</Button>
+            <Button color="secondary" onClick={() => { editIndicators(); toggleIndicator(selectedIndicator); toggleModal(); }}>{t('Apply')}</Button>
+            {/* <Button color="success" onClick={() => { editIndicators(); toggleIndicator(selectedIndicator); toggleModal(); }}>{t('Apply')}</Button> */}
           </ModalFooter>
         </Modal>
       </div>
@@ -2487,25 +2685,7 @@ const TradingViewChart2 = () => {
         </div>
       )} */}
 
-      <div ref={chartContainerRef} className="chart-container" style={{
-        position: 'relative',
-        backgroundImage: `url(${trading})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      }}>
-        {/* Dark overlay for better contrast */}
-        <div className="chart-bg-overlay" style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          background: 'rgba(20, 20, 20, 0.55)', // adjust opacity as needed
-          zIndex: 1,
-          pointerEvents: 'none',
-        }} />
-        {/* Chart and tooltips go above overlay */}
+      <div ref={chartContainerRef} className="chart-container" style={{ position: 'relative' }}>
         {tooltipVisible && tooltipData && (
           <div
             ref={tooltipRef}
@@ -2513,7 +2693,7 @@ const TradingViewChart2 = () => {
               position: 'absolute',
               left: `${tooltipPosition.x + 15}px`,
               top: `${tooltipPosition.y}px`,
-              // backgroundColor: layoutMode === "dark" ? 'rgba(26, 29, 33, 0.9)' : 'rgba(255, 255, 255, 0.9)',
+              backgroundColor: layoutMode === "dark" ? 'rgba(26, 29, 33, 0.9)' : 'rgba(255, 255, 255, 0.9)',
               border: `1px solid ${layoutMode === "dark" ? '#4a4a4a' : '#c1c1c1'}`,
               padding: '8px',
               borderRadius: '4px',
@@ -2542,9 +2722,159 @@ const TradingViewChart2 = () => {
         )}
       </div>
 
-      <TradingSignalsInterface />
+      <div className="binary-trade-container mt-0 p-1" style={{
+        backgroundColor: terminalPath ? "#010e1c" : "black"
+      }}>
+        {/* {selectedOption && (
+          <div className="selected-info d-flex justify-content-center align-items-center p-2 mb-2">
+            <span className="text-white">
+              {selectedOption.type === "time" ? `Time: ${selectedOption.value}` : `Price: ${selectedOption.value}`}
+            </span>
+
+          </div>
+        )} */}
+
+        <Row>
+          <Col xs={6} className="pe-1 timer-col">
+            <FormGroup className="incremental-frm timer-frm d-flex align-items-center gap-point-1 mb-0">
+              <Button className="border-0 col-01" onClick={handleDecrement} style={{ backgroundColor: "#262a2f", borderRadius: "5px 0px 0px 5px" }}>-</Button>
+
+              <Label className="d-md-inline-block d-none fw-bold" style={{ marginBottom: "-45px", marginLeft: '5px', position: 'relative', zIndex: 9999, }} >{t("Duration")}</Label>
+
+              <Input
+                type="text"
+                value={formatTime(time)}
+                onClick={() => setShowTimePicker(true)}
+                readOnly
+                className="time-picker-input text-center text-white col-02 position-relative"
+                style={{
+                  backgroundColor: terminalPath ? "#262a2f" : "#000",
+                  border: '1px solid #262a2f',
+                  borderRadius: "0px", padding: "0.37rem 0.9rem", fontSize: "1rem"
+                }}
+              />
+
+              {showTimePicker && (
+                <div className="position-absolute  mt-1 z-1" style={{ top: "-6px", left: "15px", width: '95%' }}>
+                  <Input
+                    type="time"
+                    value={getCurrentTime()}
+                    onChange={handleTimeChange}
+                    onBlur={() => setShowTimePicker(false)}
+                    max="23:59"
+                    autoFocus
+                    className="w-100"
+                  />
+                </div>
+              )}
+              <Button className="border-0 col-03" onClick={handleIncrement} style={{ backgroundColor: "#262a2f", borderRadius: "0px 5px 5px 0px" }}>+</Button>
+            </FormGroup>
+          </Col>
+          <Col xs={6} className="ps-0 price-col">
+            <FormGroup className="incremental-frm d-flex align-items-center gap-point-1 mb-1">
+              <Button className="border-0 col-01" onClick={handlePriceDecrease} style={{ backgroundColor: "#262a2f", borderRadius: "5px 0px 0px 5px" }}>-</Button>
+
+              <Label className="d-md-inline-block d-none fw-bold" style={{ marginBottom: "-45px", marginLeft: '5px', position: 'relative', zIndex: 9999, }} >{t("Amount")}</Label>
+
+              <Input
+                type="text"
+                value={`$${price}`}
+                onChange={handleInputChange}
+                onBlur={handleBlur} // Ensures the price is valid on blur
+                className="price-picker-input text-center border-0 text-white col-02"
+                style={{ borderRadius: "0px", padding: "0.37rem 0.9rem", fontSize: "1rem" }}
+              />
+              <Button className="border-0 col-03" onClick={handlePriceIncrease} style={{ backgroundColor: "#262a2f", borderRadius: "0px 5px 5px 0px" }}>+</Button>
+            </FormGroup>
+          </Col>
+        </Row>
+        {
+          symbolMarketActive && (
+            <Row className="justify-content-between align-items- mb-md-1 mb-5 binary-bs">
+              <Col xs={5} className="pe-0 b-col-1">
+                <Button
+                  size="lg"
+                  color="danger"
+                  className="d-flex justify-content-between align-items-center gap-1 w-100 text-dark fw-bold buy-b-btn"
+                  style={
+                    selectedOption && isMobile
+                      ? { fontSize: "14px", paddingInline: "5px" }
+                      : {}
+                  }
+                  onClick={() =>
+                    selectedOption
+                      ? handlePlacePendingOrder("put")
+                      : handlePlaceOrder("put")
+                  }
+                  disabled={
+                    // orderCount >= 10 
+                    // ||
+                    !symbolMarketActive}
+                >
+                  {selectedOption ? t("Pending Sell") : t("Sell")} <i className="ri-arrow-down-fill"></i>
+                </Button>
+
+              </Col>
+
+              <Col xs={2} style={{ padding: '0px 3px' }} className="b-col-2">
+                {selectedOption ? (
+                  <div onClick={() => setSelectedOption(null)}
+                    className="text-center w-100 fw-bold binary-time-ico cursor-pointer"
+                    style={{ paddingBlock: "0.39rem", backgroundColor: "#262a2f", borderRadius: "5px" }}>
+                    <i className="ri-close-fill" style={{ fontSize: "24px" }}></i>
+
+                  </div>
+                ) : (
+                  <div onClick={toggleTimePickerModel} className="text-center w-100 fw-bold binary-time-ico cursor-pointer"
+                    style={{ paddingBlock: "0.39rem", backgroundColor: "#262a2f", borderRadius: "5px" }}>
+                    <i className="ri-time-fill" style={{ fontSize: "24px" }}></i>
+                  </div>
+                )}
+              </Col>
 
 
+              <Col xs={5} className="ps-0 b-col-3">
+                <Button
+                  size="lg"
+                  color="success"
+                  className={`d-flex justify-content-between align-items-center gap-1 w-100 text-dark fw-bold sell-b-btn`}
+                  style={
+                    selectedOption && isMobile
+                      ? { fontSize: "14px", paddingInline: "5px" }
+                      : {}
+                  }
+                  onClick={() =>
+                    selectedOption
+                      ? handlePlacePendingOrder("call")
+                      : handlePlaceOrder("call")
+                  }
+                  disabled={
+                    // orderCount >= 10 ||
+                    !symbolMarketActive}
+                >
+                  {selectedOption ? t("Pending Buy") : t("Buy")} <i className="ri-arrow-up-fill"></i>
+                </Button>
+
+              </Col>
+            </Row>
+          )
+        }
+
+
+
+        {
+          !symbolMarketActive && (
+            <div className="text-center text-danger mt-2 fw-bold" style={{ fontSize: '24px' }}>
+              <i className="ri-error-warning-fill"></i> Market is Closed for this Symbol.
+            </div>
+          )
+        }
+        {
+          symbolMarketActive && (
+            <h3 className="d-none d-md-block" style={{ color: 'white', padding: '10px', borderRadius: '5px', fontSize: '16px' }}>{t("Profit")}: + {(symbolPercentage * price) / 100}</h3>
+          )
+        }
+      </div>
 
       <TimePickerModal
         isOpen={timePickerModel}

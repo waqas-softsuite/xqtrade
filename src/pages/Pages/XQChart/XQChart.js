@@ -72,7 +72,7 @@ const XQChart = () => {
     // return processedData.length > 0 ? processedData.slice(0, -1) : [];
   }, [data]);
 
-  const options = useMemo(() => (
+ const options = useMemo(() => (
     symbols
       ? Object.keys(symbols)
         // .filter(symbolKey => symbolKey !== "BTCUSD" && symbolKey !== "BTCUSD.ex1") // Exclude specific symbols
@@ -233,13 +233,13 @@ const XQChart = () => {
       result: latestOrderResult,
     };
 
+   
 
-
-
+   
   }, [latestOrderResult, dispatch]);
 
 
-
+ 
 
   const handleSeriesTypeChange = (type) => {
     setSelectedSeriesType(type);
@@ -540,7 +540,7 @@ const XQChart = () => {
           height: chartContainerRef.current.clientHeight,
 
         });
-
+       
       }
     });
 
@@ -655,9 +655,12 @@ const XQChart = () => {
 
 
   return (
-    <div className="page-content pt-1 xq-chart-top-wraper" >
+    <div className="page-content pt-1 xq-chart-top-wraper">
       <div className="container-fluid p-0">
         <div className="chart-wrapper">
+         
+         
+
 
           <div className="chart-topbar w-100 bg-dark d-flex align-items-center gap-2 p-2">
             <Select
@@ -764,7 +767,7 @@ const XQChart = () => {
             )}
           </div>
 
-
+         
         </div>
       </div>
     </div>

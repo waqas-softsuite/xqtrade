@@ -51,9 +51,9 @@ body {
   line-height: $line-height-base;
   color: $body-color;
   text-align: $body-text-align;
-  background-color: $body-bg; // 2
-  -webkit-text-size-adjust: 100%; // 3
-  -webkit-tap-highlight-color: rgba($black, 0); // 4
+  // background-color: $body-bg; 
+  // -webkit-text-size-adjust: 100%; 
+  // -webkit-tap-highlight-color: rgba($black, 0); 
 }
 
 
@@ -79,7 +79,7 @@ body {
 hr {
   margin: $hr-margin-y 0;
   color: $hr-color; // 1
-  background-color: currentColor;
+  // background-color: currentColor;
   border: 0;
   opacity: $hr-opacity;
 }
@@ -155,7 +155,8 @@ p {
 // 4. Prevent the text-decoration to be skipped.
 
 abbr[title],
-abbr[data-bs-original-title] { // 1
+abbr[data-bs-original-title] {
+  // 1
   text-decoration: underline; // 2
   text-decoration: underline dotted; // 2
   cursor: help; // 3
@@ -252,8 +253,13 @@ sup {
   vertical-align: baseline;
 }
 
-sub { bottom: -.25em; }
-sup { top: -.5em; }
+sub {
+  bottom: -.25em;
+}
+
+sup {
+  top: -.5em;
+}
 
 
 // Links
@@ -274,6 +280,7 @@ a {
 // See https://github.com/twbs/bootstrap/issues/19402
 
 a:not([href]):not([class]) {
+
   &,
   &:hover {
     color: inherit;
@@ -320,7 +327,7 @@ code {
   word-wrap: break-word;
 
   // Streamline the style when inside anchors to avoid broken underline and more
-  a > & {
+  a>& {
     color: inherit;
   }
 }
@@ -329,7 +336,7 @@ kbd {
   padding: $kbd-padding-y $kbd-padding-x;
   @include font-size($kbd-font-size);
   color: $kbd-color;
-  background-color: $kbd-bg;
+  // background-color: $kbd-bg;
   @include border-radius($border-radius-sm);
 
   kbd {
@@ -467,7 +474,8 @@ select {
 // 3. Opinionated: add "hand" cursor to non-disabled button elements.
 
 button,
-[type="button"], // 1
+[type="button"],
+// 1
 [type="reset"],
 [type="submit"] {
   -webkit-appearance: button; // 2
@@ -520,7 +528,7 @@ legend {
   font-weight: $legend-font-weight;
   line-height: inherit;
 
-  + * {
+  +* {
     clear: left; // 2
   }
 }

@@ -16,9 +16,7 @@
 // @import "../scss/rtl/pages-rtl";
 
 
-.theme-bg {
-  background-color: rgb(1, 14, 28) !important;
-}
+
 
 //Rigthsidebar offcanvas
 .offcanvas-header-dark {
@@ -112,7 +110,7 @@ html .label-dzbd7lyV.label-e9c6dycV.end-dzbd7lyV.top-dzbd7lyV.snap-dzbd7lyV.js-c
 
 body.qJTHM {
   .container {
-    background-color: transparent;
+    // background-color: transparent;
   }
 }
 
@@ -213,7 +211,7 @@ body.qJTHM {
     }
 
     .ohGHbMkZKR {
-      fill: black;
+      // fill: black;
       display: inline-block;
       flex-shrink: 0;
       height: 1em;
@@ -1511,13 +1509,7 @@ $focus-color: rgba(105, 255, 65, 1);
     }
   }
 
-  [data-bs-theme="dark"] {
-
-    --ra-body-bg: #000000 !important; // Dark mode small screen background
-    --ra-body-bg-rgb: #000000 !important; // Dark mode small screen background
-    --ra-header-bg: #000000 !important;
-
-  }
+  [data-bs-theme="dark"] {}
 
   .symbols-chart {
     height: 100% !important;
@@ -1938,7 +1930,7 @@ $value in $theme-colors {
 
 
   .navbar-header {
-    height: 100px;
+    height: 70px;
   }
 
   .page-content {
@@ -1962,7 +1954,7 @@ $value in $theme-colors {
 
   body {
     // min-height: 100vh;
-    background-color: black;
+    // background-color: black;
     padding-top: 0px;
   }
 
@@ -1994,7 +1986,7 @@ $value in $theme-colors {
   }
 
   .nav-btn-sidebar {
-    height: calc(100vh - 57px);
+    height: calc(100vh - 37px);
     width: 100px;
     display: flex;
     flex-direction: column;

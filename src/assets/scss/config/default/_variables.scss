@@ -1441,7 +1441,7 @@ $accordion-button-active-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3
 // scss-docs-start tooltip-variables
 $tooltip-font-size: $font-size-sm;
 $tooltip-max-width: 200px;
-$tooltip-color: var(--#{$prefix}body-bg);
+// $tooltip-color: var(--#{$prefix}body-bg);
 $tooltip-bg: var(--#{$prefix}emphasis-color);
 $tooltip-border-radius: var(--#{$prefix}border-radius);
 $tooltip-opacity: .9;
@@ -1650,7 +1650,7 @@ $list-group-action-active-bg: var(--#{$prefix}secondary-bg);
 
 // scss-docs-start thumbnail-variables
 $thumbnail-padding: .25rem;
-$thumbnail-bg: var(--#{$prefix}body-bg);
+// $thumbnail-bg: var(--#{$prefix}body-bg);
 $thumbnail-border-width: var(--#{$prefix}border-width);
 $thumbnail-border-color: var(--#{$prefix}border-color);
 $thumbnail-border-radius: var(--#{$prefix}border-radius);
@@ -1780,7 +1780,7 @@ $code-color: $pink;
 $kbd-padding-y: .2rem;
 $kbd-padding-x: .4rem;
 $kbd-font-size: $code-font-size;
-$kbd-color: var(--#{$prefix}body-bg);
+// $kbd-color: var(--#{$prefix}body-bg);
 $kbd-bg: var(--#{$prefix}body-color);
 $nested-kbd-font-weight: null; // Deprecated in v5.2.0, removing in v6
 

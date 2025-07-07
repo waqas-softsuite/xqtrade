@@ -17,7 +17,7 @@
 
     @media (min-width: 768px) {
         margin-left: var(--#{$prefix}vertical-menu-width);
-        margin-top: 100px !important;
+        margin-top: 75px !important;
         display: flex;
     }
 }
@@ -930,7 +930,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba($dark, 0.35);
+    // background-color: rgba($dark, 0.35);
     z-index: 1003;
     display: none;
 }

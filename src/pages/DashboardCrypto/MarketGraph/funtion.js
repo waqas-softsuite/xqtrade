@@ -93,11 +93,11 @@ export const symbolFullNames = {
 };
 
 export const timeframes = {
-    "1m": 60,
-    "5m": 300,
-    "15m": 900,
-    "1h": 3600,
-    "1D": 86400
+  "1m": 60,
+  "5m": 300,
+  "15m": 900,
+  "1h": 3600,
+  "1D": 86400
 };
 
 

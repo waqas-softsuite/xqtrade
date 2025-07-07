@@ -8,9 +8,9 @@
     right: 0;
     left: 0;
     z-index: 1002;
-    background-color: var(--#{$prefix}header-bg);
+    // background-color: var(--#{$prefix}header-bg);
     transition: all 0.1s ease-out;
-    border-bottom: 1px solid var(--#{$prefix}header-border);
+    // border-bottom: 1px solid var(--#{$prefix}header-border);
 
     &.topbar-shadow {
         box-shadow: $box-shadow;
@@ -36,7 +36,7 @@
         padding: 0 calc(#{$grid-gutter-width} * 0.5) 0 calc(#{$grid-gutter-width} * 0.5);
     }
 
-    @media (max-width: 767px){
+    @media (max-width: 767px) {
         height: 45px;
     }
 
@@ -63,7 +63,10 @@
         color: var(--#{$prefix}header-item-sub-color);
         transition: all 0.5s ease;
 
-        &:hover, &:focus, &:active, &.active {
+        &:hover,
+        &:focus,
+        &:active,
+        &.active {
             background-color: var(--#{$prefix}header-item-bg);
         }
 

@@ -12,10 +12,14 @@ const IndicatorsSettings = ({indicatorName, onInputChange}) => {
       const storedLineColor = localStorage.getItem(indiName+'LineColor');
       return storedLineColor ? storedLineColor : '#FFA500';
     });
+     const [deviationVal, setDeviationVal] =  useState(() => {
+        const storedDeviationVal = localStorage.getItem(indiName+'Deviation');
+        return storedDeviationVal ? JSON.parse(storedDeviationVal) : 2;
+      });
     useEffect(() => {
       localStorage.setItem(indiName+'Period', JSON.stringify(periodVal));
       localStorage.setItem(indiName+'LineColor', lineColor);
-    }, [periodVal, lineColor]);
+    }, [periodVal, lineColor, deviationVal]);
 
   const handlePeriodVal = (event) => {
     setPeriodVal(Number(event.target.value));
@@ -25,11 +29,27 @@ const IndicatorsSettings = ({indicatorName, onInputChange}) => {
     setLineColor(event.target.value);
     onInputChange({ indiName, periodVal, lineColor: event.target.value });
   };
+  const handleDeviation = (event) => {
+     setDeviationVal(Number(event.target.value));
+    onInputChange({ indiName, periodVal, lineColor, deviationVal: event.target.value });
+  };
 
   
   return (
      <div>
-       <div className="d-flex align-items-center bd-highlight mb-3">
+      {(indiName === 'bb') ? <div className="d-flex align-items-center bd-highlight mb-3">
+            <label className="me-auto p-2 bd-highlight" style={{ color: '#fff' }}> Standard Deviation :</label>
+            <Input
+              type="number"
+              value={deviationVal}
+              onChange={handleDeviation}
+              min={1}
+              className="p-2 bd-highlight bg-dark text-white"
+              style={{ width: "150px", border: "1px solid #ccc" }}
+            />
+          </div>
+          : ''}
+          <div className="d-flex align-items-center bd-highlight mb-3">
             <label className="me-auto p-2 bd-highlight" style={{ color: '#fff' }}> {indicatorName} Period :</label>
             <Input
               type="number"
