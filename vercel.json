@@ -5,18 +5,25 @@
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "build" 
+        "distDir": "build",
+        "outputDirectory": "build"
       }
     }
   ],
   "routes": [
     {
       "src": "/static/(.*)",
-      "headers": { "cache-control": "public, max-age=31536000, immutable" }
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "/service-worker.js",
+      "dest": "/build/service-worker.js"
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html",
+      "dest": "/build/index.html",
       "status": 200
     }
   ]
