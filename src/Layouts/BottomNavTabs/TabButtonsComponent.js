@@ -122,19 +122,20 @@ const TabButtonsComponent = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                justifyContent: "space-between",
+                justifyContent: "center", // Center all items vertically
                 borderRadius: "12px",
+                paddingTop: 0,
+                paddingBottom: 0
             }}
         >
-            {/* Top icons */}
+            {/* All sidebar items in one column, centered */}
             <div
                 style={{
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    gap: "5px",
-                    marginTop: "36px",
-                    flexGrow: 1
+                    gap: "12px", // More space between items for visual balance
+                    width: "100%"
                 }}
             >
                 {/* SIGNALS - Tab 1 */}
@@ -142,7 +143,7 @@ const TabButtonsComponent = () => {
                     style={getItemStyle("1")}
                     onClick={() => toggleTab("1")}
                 >
-                    <div style={getIconContainerStyle("1")}>
+                    <div style={getIconContainerStyle("1")}> 
                         <img src={signal} alt="" style={getImageStyle("1")} />
                     </div>
                     <div>{t('SIGNALS')}</div>
@@ -153,7 +154,7 @@ const TabButtonsComponent = () => {
                     style={getItemStyle("2")}
                     onClick={() => toggleTab("2")}
                 >
-                    <div style={getIconContainerStyle("2")}>
+                    <div style={getIconContainerStyle("2")}> 
                         <img src={finance} alt="" style={getImageStyle("2")} />
                     </div>
                     <div>{t('TRADES')}</div>
@@ -164,7 +165,7 @@ const TabButtonsComponent = () => {
                     style={getItemStyle("3")}
                     onClick={() => toggleTab("3")}
                 >
-                    <div style={getIconContainerStyle("3")}>
+                    <div style={getIconContainerStyle("3")}> 
                         <img src={markete} alt="" style={getImageStyle("3")} />
                     </div>
                     <div>{t('MARKET')}</div>
@@ -175,27 +176,18 @@ const TabButtonsComponent = () => {
                     style={getItemStyle("4")}
                     onClick={() => toggleTab("4")}
                 >
-                    <div style={getIconContainerStyle("4")}>
+                    <div style={getIconContainerStyle("4")}> 
                         <img src={Achivements} alt="" style={getImageStyle("4")} />
                     </div>
                     <div>{t('EVENTS')}</div>
                 </div>
-            </div>
 
-            {/* Bottom help icon - Tab 5 */}
-            <div
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    marginBottom: "100px"
-                }}
-            >
+                {/* HELP - Tab 5 (now in same column) */}
                 <div
                     style={getItemStyle("5")}
                     onClick={() => toggleTab("5")}
                 >
-                    <div style={getIconContainerStyle("5")}>
+                    <div style={getIconContainerStyle("5")}> 
                         <img src={help} alt="" style={getImageStyle("5")} />
                     </div>
                     <div>{t('HELP')}</div>
